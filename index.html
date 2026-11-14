@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Koushik Chakraborty — Media Buyer & Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ═══════════════════════════════
+       DESIGN SYSTEM & TOKENS
+    ═══════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #070709;
+      --surface:      rgba(17, 17, 22, 0.75);
+      --surface-card: rgba(22, 22, 29, 0.65);
+      --surface-hover:rgba(29, 29, 39, 0.85);
+      --border:       rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(200, 255, 87, 0.35);
+      --border-subtle:rgba(255, 255, 255, 0.04);
+      --muted:        #525260;
+      --subtle:       #8a8a9a;
+      --text:         #c2c2d2;
+      --heading:      #ffffff;
+      --accent:       #c8ff57;
+      --accent-dim:   #a5db39;
+      --accent-glow:  rgba(200, 255, 87, 0.12);
+      --accent-soft:  rgba(200, 255, 87, 0.06);
+      
+      --font-main:    'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-display: 'Space Grotesk', sans-serif;
+      
+      --r-sm: 8px;
+      --r-md: 14px;
+      --r-lg: 20px;
+      --r-full: 9999px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-main);
+      font-size: 14.5px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; }
+
+    /* ═══════════════════════════════
+       ATMOSPHERIC LIGHTING & GRID
+    ═══════════════════════════════ */
+    /* Dynamic ambient glows */
+    .ambient-glow-1 {
+      position: fixed;
+      top: -150px;
+      left: 15%;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200, 255, 87, 0.075) 0%, rgba(200, 255, 87, 0) 70%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .ambient-glow-2 {
+      position: fixed;
+      top: 45%;
+      right: -100px;
+      width: 550px;
+      height: 550px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(120, 160, 255, 0.04) 0%, rgba(120, 160, 255, 0) 70%);
+      filter: blur(100px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Architectural grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.038) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.038) 1px, transparent 1px);
+      background-size: 44px 44px;
+      pointer-events: none;
+    }
+
+    /* Edge vignette */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(ellipse 75% 75% at 50% 50%, transparent 40%, var(--bg) 95%);
+      pointer-events: none;
+    }
+
+    /* Layout wrapper */
+    .wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ═══════════════════════════════
+       SECTION LABELS
+    ═══════════════════════════════ */
+    .label {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.4rem;
+    }
+    .label-dot {
+      width: 5px;
+      height: 5px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent);
+    }
+    .label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border) 0%, transparent 100%);
+    }
+
+    /* ═══════════════════════════════
+       HERO SECTION
+    ═══════════════════════════════ */
+    .hero {
+      padding: 3.5rem 0 2.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5.2vw, 4rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: var(--heading);
+      line-height: 1.05;
+      margin-bottom: 0.85rem;
+    }
+
+    .hero-name span {
+      background: linear-gradient(180deg, #ffffff 30%, #8d8d9f 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-about {
+      font-size: 0.92rem;
+      font-weight: 400;
+      color: var(--subtle);
+      max-width: 52ch;
+      line-height: 1.65;
+      margin-bottom: 1.1rem;
+    }
+
+    .hero-about strong {
+      color: var(--heading);
+      font-weight: 600;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-meta a, .hero-meta span {
+      font-size: 0.8rem;
+      color: var(--subtle);
+      transition: color 0.2s;
+    }
+
+    .hero-meta a:hover {
+      color: var(--accent);
+    }
+
+    /* Social Pills */
+    .hero-links {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+    }
+
+    .pill-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.035);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      padding: 0.32rem 0.8rem;
+      border-radius: var(--r-full);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .pill-link:hover {
+      color: var(--accent);
+      border-color: var(--border-focus);
+      background: var(--accent-glow);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 12px rgba(200, 255, 87, 0.15);
+    }
+
+    /* Avatar styling */
+    .hero-avatar-wrap {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .avatar-halo {
+      position: absolute;
+      inset: -10px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      filter: blur(12px);
+      z-index: 0;
+    }
+
+    .hero-avatar {
+      position: relative;
+      z-index: 1;
+      width: 155px;
+      height: 155px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      filter: grayscale(1) contrast(1.15) brightness(0.95);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+      transition: filter 0.4s, transform 0.4s;
+    }
+
+    .hero-avatar-wrap:hover .hero-avatar {
+      filter: grayscale(0.5) contrast(1.1) brightness(1.02);
+      transform: scale(1.02);
+    }
+
+    .hero-avatar-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: conic-gradient(var(--accent) 0deg 45deg, transparent 45deg 360deg);
+      z-index: 0;
+      opacity: 0.65;
+      animation: spin 10s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ═══════════════════════════════
+       SELECTED WORK (ELEGANT CARDS)
+    ═══════════════════════════════ */
+    #work { padding: 2.5rem 0; }
+
+    .work-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .wc {
+      display: grid;
+      grid-template-columns: 2.5ch 1fr auto;
+      gap: 1.2rem 1.6rem;
+      align-items: baseline;
+      padding: 1.15rem 1.5rem;
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wc::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transform-origin: center;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .wc:hover {
+      background: var(--surface-hover);
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateX(4px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45), 0 0 20px rgba(200, 255, 87, 0.05);
+    }
+
+    .wc:hover::before {
+      transform: scaleY(1);
+    }
+
+    .wc-num {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+      padding-top: 0.15rem;
+      transition: color 0.3s;
+    }
+
+    .wc:hover .wc-num {
+      color: var(--accent);
+    }
+
+    .wc-main {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .wc-title-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .wc-title {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--heading);
+      letter-spacing: -0.02em;
+    }
+
+    .wc-badge {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-soft);
+      border: 1px solid rgba(200, 255, 87, 0.2);
+      padding: 0.16rem 0.6rem;
+      border-radius: var(--r-full);
+      white-space: nowrap;
+    }
+
+    .wc-desc {
+      font-size: 0.82rem;
+      color: var(--subtle);
+      line-height: 1.6;
+      max-width: 68ch;
+    }
+
+    .wc-arrow {
+      font-size: 1.05rem;
+      color: var(--muted);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      padding-top: 0.15rem;
+    }
+
+    .wc:hover .wc-arrow {
+      color: var(--accent);
+      transform: translate(3px, -3px);
+    }
+
+    /* ═══════════════════════════════
+       VISUAL EXPLORATIONS
+    ═══════════════════════════════ */
+    #explorations {
+      padding: 2.8rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .exp-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.9rem;
+    }
+
+    .ec {
+      background: var(--surface-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .ec:hover {
+      background: var(--surface-hover);
+      border-color: rgba(255, 255, 255, 0.18);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(200, 255, 87, 0.08);
+    }
+
+    .ec-img-wrap {
+      overflow: hidden;
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #000;
+      position: relative;
+    }
+
+    .ec-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s;
+      filter: grayscale(0.25) brightness(0.85);
+    }
+
+    .ec:hover .ec-img {
+      transform: scale(1.05);
+      filter: grayscale(0) brightness(1);
+    }
+
+    .ec.wide {
+      grid-column: span 2;
+    }
+
+    .ec.wide .ec-img-wrap {
+      aspect-ratio: 21/7.5;
+    }
+
+    .ec-body {
+      padding: 1.1rem 1.3rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      flex: 1;
+    }
+
+    .ec-type {
+      font-family: var(--font-display);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .ec-title {
+      font-family: var(--font-display);
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--heading);
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+
+    .ec-desc {
+      font-size: 0.78rem;
+      color: var(--subtle);
+      line-height: 1.55;
+      flex: 1;
+    }
+
+    .ec-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 0.65rem;
+      margin-top: 0.4rem;
+      transition: color 0.2s;
+    }
+
+    .ec:hover .ec-cta {
+      color: var(--accent);
+    }
+
+    .ec-cta svg {
+      transition: transform 0.25s;
+    }
+
+    .ec:hover .ec-cta svg {
+      transform: translate(3px, -3px);
+    }
+
+    /* ═══════════════════════════════
+       SKILLS & WORKFLOW
+    ═══════════════════════════════ */
+    #skills {
+      padding: 2.8rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .skills-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.9rem;
+    }
+
+    .sb {
+      background: var(--surface-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 1.4rem 1.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      transition: border-color 0.3s;
+    }
+
+    .sb:hover {
+      border-color: rgba(255, 255, 255, 0.14);
+    }
+
+    .sb.span2 {
+      grid-column: span 2;
+    }
+
+    .sb-title {
+      font-family: var(--font-display);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid var(--border);
+      padding: 0.28rem 0.75rem;
+      border-radius: var(--r-full);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .pill:hover, .pill.hi {
+      background: var(--accent-glow);
+      border-color: var(--border-focus);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
+      gap: 0.4rem;
+    }
+
+    .tool-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      padding: 0.5rem 0.4rem;
+      border-radius: var(--r-sm);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .tool-item:hover {
+      background: var(--accent-glow);
+      border-color: var(--border-focus);
+      color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ═══════════════════════════════
+       COMMUNITY & EVENT OPS
+    ═══════════════════════════════ */
+    #experience-ops {
+      padding: 2.8rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .vol-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.9rem;
+    }
+
+    .vc {
+      background: var(--surface-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 1.4rem 1.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      transition: all 0.3s;
+    }
+
+    .vc:hover {
+      background: var(--surface-hover);
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .vc-role {
+      font-family: var(--font-display);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .vc-event {
+      font-family: var(--font-display);
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--heading);
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+
+    .vc-desc {
+      font-size: 0.8rem;
+      color: var(--subtle);
+      line-height: 1.6;
+      margin-top: 0.25rem;
+    }
+
+    /* ═══════════════════════════════
+       EDUCATION
+    ═══════════════════════════════ */
+    #education {
+      padding: 2.8rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .edu-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .edu-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      padding: 0.95rem 1.4rem;
+      background: var(--surface-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .edu-row:hover {
+      background: var(--surface-hover);
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateX(3px);
+    }
+
+    .edu-degree {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--heading);
+      letter-spacing: -0.01em;
+    }
+
+    .edu-school {
+      font-size: 0.78rem;
+      color: var(--subtle);
+      margin-top: 0.1rem;
+    }
+
+    .edu-chip {
+      flex-shrink: 0;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      padding: 0.18rem 0.65rem;
+      border-radius: var(--r-full);
+    }
+
+    .course-card {
+      margin-top: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--surface-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      padding: 0.65rem 1.2rem;
+      border-radius: var(--r-md);
+      font-size: 0.8rem;
+      color: var(--text);
+      transition: all 0.25s;
+    }
+
+    .course-card:hover {
+      border-color: var(--border-focus);
+      background: var(--accent-glow);
+    }
+
+    .course-card a {
+      color: var(--accent);
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .course-card a:hover {
+      color: var(--accent-dim);
+    }
+
+    /* ═══════════════════════════════
+       FOOTER
+    ═══════════════════════════════ */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 0;
+      margin-top: 1.5rem;
+      background: rgba(7, 7, 9, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+    }
+
+    .footer-name {
+      font-family: var(--font-display);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.4rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--subtle);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    /* ═══════════════════════════════
+       RESPONSIVE DESIGN
+    ═══════════════════════════════ */
+    @media (max-width: 768px) {
+      .wrap { padding: 0 1.25rem; }
+      .hero { padding: 3rem 0 2rem; }
+      .hero-inner {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: flex-start;
+        gap: 1.5rem;
+      }
+      .hero-avatar {
+        width: 100px;
+        height: 100px;
+      }
+      .hero-name {
+        font-size: clamp(2.2rem, 7vw, 3rem);
+      }
+      .hero-about {
+        font-size: 0.9rem;
+      }
+      .hero-meta {
+        flex-wrap: wrap;
+        gap: 0.6rem 1rem;
+        margin-bottom: 1rem;
+      }
+
+      /* Work section cards on tablet/mobile */
+      .wc {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        padding: 1.2rem;
+      }
+      .wc-num {
+        display: none;
+      }
+      .wc-arrow {
+        display: none;
+      }
+      .wc-title-row {
+        gap: 0.6rem;
+      }
+
+      /* Grids to single column */
+      .exp-grid, .skills-layout, .vol-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      .ec.wide {
+        grid-column: 1;
+      }
+      .ec.wide .ec-img-wrap {
+        aspect-ratio: 16/9;
+      }
+      .sb.span2 {
+        grid-column: 1;
+      }
+
+      /* Education row wrap */
+      .edu-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+
+      /* Footer stacked */
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient lighting gradients -->
+  <div class="ambient-glow-1"></div>
+  <div class="ambient-glow-2"></div>
+
+  <!-- ══════════ HERO ══════════ -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-inner">
+
+        <div>
+          <h1 class="hero-name"><span>Koushik</span><br>Chakraborty</h1>
+
+          <p class="hero-about">
+            Media buyer scaling iGaming platforms with <strong>AI-powered creatives</strong> &amp; no-code landing pages. Graphic &amp; UI/UX designer with a sharp eye for what stops the scroll — across Web3, iGaming, and creator brands.
+          </p>
+
+          <div class="hero-meta">
+            <a href="mailto:koxshik@gmail.com">koxshik@gmail.com</a>
+            <span>·</span>
+            <span>+91 9873531928</span>
+          </div>
+
+          <div class="hero-links">
+            <a class="pill-link" href="https://be.net/koxshik" target="_blank" rel="noopener">Behance</a>
+            <a class="pill-link" href="https://dribbble.com/koxshik" target="_blank" rel="noopener">Dribbble</a>
+            <a class="pill-link" href="https://fueler.io/koxshik" target="_blank" rel="noopener">Fueler</a>
+            <a class="pill-link" href="https://zaap.bio/koxshik" target="_blank" rel="noopener">Zaap</a>
+            <a class="pill-link" href="https://www.linkedin.com/in/koxshik" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+        </div>
+
+        <div class="hero-avatar-wrap">
+          <div class="avatar-halo"></div>
+          <img class="hero-avatar" src="avatar.png" alt="Koushik Chakraborty" />
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ WORK ══════════ -->
+  <section id="work">
+    <div class="wrap">
+      <div class="label"><span class="label-dot"></span>Selected Work</div>
+      <div class="work-list">
+
+        <div class="wc">
+          <span class="wc-num">01</span>
+          <div class="wc-main">
+            <div class="wc-title-row">
+              <span class="wc-title">KNN Syndicate</span>
+              <span class="wc-badge">Media Buyer · AI Video Generation</span>
+            </div>
+            <p class="wc-desc">Drove user acquisition and performance scaling for iGaming platforms and eCommerce brands. Produced high-converting ad creatives utilizing AI video generation and deployed targeted media buying campaigns optimized for conversions.</p>
+          </div>
+          <span class="wc-arrow">↗</span>
+        </div>
+
+        <div class="wc">
+          <span class="wc-num">02</span>
+          <div class="wc-main">
+            <div class="wc-title-row">
+              <span class="wc-title">Futurensetech</span>
+              <span class="wc-badge">Graphic Design</span>
+            </div>
+            <p class="wc-desc">Developed the branding and visual identity for a newly launched subdomain, creating social media posts, Instagram posts, and stories that were later adopted as the official brand guidelines for that domain. Designed pitch decks and marketing collateral to support the subdomain's launch.</p>
+          </div>
+          <span class="wc-arrow">↗</span>
+        </div>
+
+        <div class="wc">
+          <span class="wc-num">03</span>
+          <div class="wc-main">
+            <div class="wc-title-row">
+              <span class="wc-title">102ndFloor</span>
+              <span class="wc-badge">Graphic Design</span>
+            </div>
+            <p class="wc-desc">Designed blog post banners for 102ndFloorAgency over a 3-month content campaign, ensuring visually engaging graphics aligned with brand guidelines.</p>
+          </div>
+          <span class="wc-arrow">↗</span>
+        </div>
+
+        <div class="wc">
+          <span class="wc-num">04</span>
+          <div class="wc-main">
+            <div class="wc-title-row">
+              <span class="wc-title">TurtleMetaverse</span>
+              <span class="wc-badge">Graphic / UI-UX Design</span>
+            </div>
+            <p class="wc-desc">Designed a complete website for Turtle Metaverse, handling wireframing, prototyping, and final UI design. Designed social media content, enhancing engagement and brand visibility.</p>
+          </div>
+          <span class="wc-arrow">↗</span>
+        </div>
+
+        <div class="wc">
+          <span class="wc-num">05</span>
+          <div class="wc-main">
+            <div class="wc-title-row">
+              <span class="wc-title">SpongeBNB</span>
+              <span class="wc-badge">Graphic / UI-UX Design</span>
+            </div>
+            <p class="wc-desc">Designed, wireframed, and prototyped a landing page that supports swapping and staking of crypto-tokens. Also social media content, i.e. memes, infographics, etc.</p>
+          </div>
+          <span class="wc-arrow">↗</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ EXPLORATIONS ══════════ -->
+  <section id="explorations">
+    <div class="wrap">
+      <div class="label"><span class="label-dot"></span>Visual Explorations</div>
+      <div class="exp-grid">
+
+        <a class="ec wide" href="https://www.behance.net/gallery/148508399/BlueLearn-App-Home-UI-Redesign-UIUX-Project" target="_blank" rel="noopener">
+          <div class="ec-img-wrap">
+            <img class="ec-img" src="https://imagedelivery.net/tqC70bVt8T6GtQUXNsa2-g/c9a598cb-d7a9-4386-2629-ec129c4b1e00/public" alt="BlueLearn App Home UI Redesign" />
+          </div>
+          <div class="ec-body">
+            <span class="ec-type">UI/UX Case Study</span>
+            <div class="ec-title">BlueLearn — App Home UI Redesign</div>
+            <p class="ec-desc">Redesigning BlueLearn's home interface for India's student community — focused on a sleek, dynamic, personalised experience.</p>
+            <div class="ec-cta">View on Behance <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M1.5 10.5L10.5 1.5M10.5 1.5H4.5M10.5 1.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+        </a>
+
+        <a class="ec" href="https://www.behance.net/gallery/150649437/The-Da-Vinci-Code-Visual-Design-Exploration" target="_blank" rel="noopener">
+          <div class="ec-img-wrap">
+            <img class="ec-img" src="https://imagedelivery.net/tqC70bVt8T6GtQUXNsa2-g/f06213a0-accd-4e0a-5698-e25654fe4900/public" alt="The Da Vinci Code" />
+          </div>
+          <div class="ec-body">
+            <span class="ec-type">Graphic Design</span>
+            <div class="ec-title">The Da Vinci Code — Visual Exploration</div>
+            <p class="ec-desc">Typography-driven concept inspired by The Da Vinci Code. Thematic storytelling through layout, texture, and type.</p>
+            <div class="ec-cta">View on Behance <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M1.5 10.5L10.5 1.5M10.5 1.5H4.5M10.5 1.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+        </a>
+
+        <a class="ec" href="https://www.behance.net/gallery/150521205/RUNRUSHFLY-Visual-Design-Exploration" target="_blank" rel="noopener">
+          <div class="ec-img-wrap">
+            <img class="ec-img" src="https://imagedelivery.net/tqC70bVt8T6GtQUXNsa2-g/aaf1ff83-c553-4104-aae2-362eb38f5900/public" alt="RUN/RUSH/FLY" />
+          </div>
+          <div class="ec-body">
+            <span class="ec-type">Graphic Design</span>
+            <div class="ec-title">RUN/RUSH/FLY — Visual Exploration</div>
+            <p class="ec-desc">An energetic exploration playing with motion, rhythm, and bold typographic composition.</p>
+            <div class="ec-cta">View on Behance <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M1.5 10.5L10.5 1.5M10.5 1.5H4.5M10.5 1.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+        </a>
+
+        <a class="ec" href="https://www.behance.net/gallery/150771819/Designs-inspired-by-TikToks-Personal-Project" target="_blank" rel="noopener">
+          <div class="ec-img-wrap">
+            <img class="ec-img" src="https://imagedelivery.net/tqC70bVt8T6GtQUXNsa2-g/a3071205-d0df-4b94-4c1c-d31edb473000/public" alt="Designs inspired by TikToks" />
+          </div>
+          <div class="ec-body">
+            <span class="ec-type">Personal Project</span>
+            <div class="ec-title">Designs Inspired by TikToks</div>
+            <p class="ec-desc">Translating viral TikTok aesthetics into static design — trend-driven visual storytelling.</p>
+            <div class="ec-cta">View on Behance <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M1.5 10.5L10.5 1.5M10.5 1.5H4.5M10.5 1.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+        </a>
+
+        <a class="ec" href="https://www.behance.net/gallery/172737527/102ndFloor-Blog-Headers" target="_blank" rel="noopener">
+          <div class="ec-img-wrap">
+            <img class="ec-img" src="https://images.zaap.ai/public/49368b9ab63fe37d1b3044e44db48c87a452b29c8f3f223e47c9.png" alt="102ndFloor Blog Headers" />
+          </div>
+          <div class="ec-body">
+            <span class="ec-type">Freelance · Graphic Design</span>
+            <div class="ec-title">102ndFloor — Blog Headers</div>
+            <p class="ec-desc">Blog banners for a 3-month content campaign at 102ndFloor Agency — visually sharp, brand-aligned.</p>
+            <div class="ec-cta">View on Behance <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M1.5 10.5L10.5 1.5M10.5 1.5H4.5M10.5 1.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ SKILLS ══════════ -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="label"><span class="label-dot"></span>Skills &amp; Workflow</div>
+      <div class="skills-layout">
+
+        <div class="sb">
+          <div class="sb-title">What I do</div>
+          <div class="pill-row">
+            <span class="pill hi">Media Buying</span>
+            <span class="pill hi">AI Video Generation</span>
+            <span class="pill hi">Graphic Design</span>
+            <span class="pill hi">UI Design</span>
+            <span class="pill hi">Branding</span>
+            <span class="pill">Client Management</span>
+            <span class="pill">Community Management</span>
+            <span class="pill">Event Ops &amp; Team Co-od</span>
+          </div>
+        </div>
+
+        <div class="sb">
+          <div class="sb-title">Languages</div>
+          <div class="pill-row">
+            <span class="pill hi">English</span>
+            <span class="pill hi">Hindi</span>
+          </div>
+          <div class="sb-title" style="margin-top:0.6rem">Interests</div>
+          <div class="pill-row">
+            <span class="pill">Social Media Trends</span>
+            <span class="pill">Web3</span>
+          </div>
+        </div>
+
+        <div class="sb span2">
+          <div class="sb-title">Tools</div>
+          <div class="tool-grid">
+            <div class="tool-item">Figma</div>
+            <div class="tool-item">Adobe XD</div>
+            <div class="tool-item">Balsamiq</div>
+            <div class="tool-item">Photoshop</div>
+            <div class="tool-item">Illustrator</div>
+            <div class="tool-item">Midjourney</div>
+            <div class="tool-item">Capcut</div>
+            <div class="tool-item">Framer</div>
+            <div class="tool-item">WordPress</div>
+            <div class="tool-item">Elementor</div>
+            <div class="tool-item">FigJam</div>
+            <div class="tool-item">Miro / Mural</div>
+            <div class="tool-item">Canva</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ EXPERIENCE & OPS ══════════ -->
+  <section id="experience-ops">
+    <div class="wrap">
+      <div class="label"><span class="label-dot"></span>Experience &amp; Operations</div>
+      <div class="vol-grid">
+        <div class="vc">
+          <div class="vc-role">On-ground Operations Coordinator</div>
+          <div class="vc-event">ICC Official Fanpark — Ind V Pak</div>
+          <p class="vc-desc">Coordinated directly with celebrity teams (Parmish Verma &amp; Raftaar) for backstage and stage support. Assisted with on-site crisis management and team coordination.</p>
+        </div>
+        <div class="vc">
+          <div class="vc-role">Audience Experience Coordinator</div>
+          <div class="vc-event">Mindfool India Tour, Delhi</div>
+          <p class="vc-desc">Provided crowd assistance and resolved attendee queries. Ensured attendees received sealed envelopes to secure phones and prevent videography.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ EDUCATION ══════════ -->
+  <section id="education">
+    <div class="wrap">
+      <div class="label"><span class="label-dot"></span>Education</div>
+      <div class="edu-stack">
+        <div class="edu-row">
+          <div>
+            <div class="edu-degree">Bachelor of Business Administration (Digital Marketing)</div>
+            <div class="edu-school">Manav Rachna International Institute of Research &amp; Studies</div>
+          </div>
+          <span class="edu-chip">BBA</span>
+        </div>
+        <div class="edu-row">
+          <div>
+            <div class="edu-degree">Humanities</div>
+            <div class="edu-school">Shyama Prasad Vidyalaya</div>
+          </div>
+          <span class="edu-chip">Senior Secondary</span>
+        </div>
+        <div class="edu-row">
+          <div>
+            <div class="edu-degree">Elementary / Primary School</div>
+            <div class="edu-school">Shyama Prasad Vidyalaya</div>
+          </div>
+          <span class="edu-chip">Primary</span>
+        </div>
+      </div>
+      <div class="course-card">
+        <span>📜</span> &nbsp;Social Media Marketing &nbsp;·&nbsp;
+        <a href="https://academy.hubspot.com/courses/social-media" target="_blank" rel="noopener">HubSpot Certified</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ FOOTER ══════════ -->
+  <footer>
+    <div class="wrap">
+      <div class="footer-inner">
+        <span class="footer-name">Koushik Chakraborty &mdash; @koxshik</span>
+        <div class="footer-links">
+          <a href="https://be.net/koxshik" target="_blank" rel="noopener">Behance</a>
+          <a href="https://dribbble.com/koxshik" target="_blank" rel="noopener">Dribbble</a>
+          <a href="https://fueler.io/koxshik" target="_blank" rel="noopener">Fueler</a>
+          <a href="https://zaap.bio/koxshik" target="_blank" rel="noopener">Zaap</a>
+          <a href="https://www.linkedin.com/in/koxshik" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
